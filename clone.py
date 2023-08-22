@@ -39,6 +39,21 @@ class Array():
             value += elem 
         return(value)
 
+    def mean(self):
+        value = 0
+        for elem in self.data:
+            if not isinstance(elem, (int, float)):
+                raise TypeError("Mean can only be calculated on arrays of types of int or float")
+            value += elem
+        return(value/self.size)
+
+    def product(self):
+        value = 1
+        for elem in self.data:
+            if not isinstance(elem, (int, float)):
+                raise TypeError("Product can only be calculated on arrays of types of int or float")
+            value *= elem
+        return(value)
 
     def __getitem__(self, index):
         if isinstance(index, slice):
@@ -106,10 +121,12 @@ class Array():
         else:
             return(self.handle_errors(compared, "divided by"))
 
+    # Aliases
+    average = mean
 
 if __name__ == "__main__":
-    arr1 = Array([1, 2, 26])
+    arr1 = Array([5, 10, 15])
     arr2 = Array([2, 4, 6])
 
     print(arr1.size, arr1)
-    print(arr1.sum())
+    print(arr1.product())

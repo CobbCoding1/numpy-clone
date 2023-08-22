@@ -51,3 +51,11 @@ Current Functionality:
 #### Return sum of all elements in array
 
 `print(arr.sum())` output: 27
+
+#### Return mean/average of all elements in array
+
+`print(arr.mean())` output: 4.5
+
+#### Return product of all elements in array
+
+`print(arr.product())` output: 600
