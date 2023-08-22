@@ -1,3 +1,6 @@
+from types import NoneType
+
+
 class Array():
     def __init__(self, data, ndim=0):
         self.data = data
@@ -25,9 +28,20 @@ class Array():
         self.size = new_size
 
     def __getitem__(self, index):
-        if(index > self.size):
-            raise IndexError("Array index out of range")
-        return(self.data[index])
+        if isinstance(index, slice):
+            if isinstance(index.stop, NoneType):
+                if(index.start >= self.size):
+                    raise IndexError("Array slice index out of range")
+                else:
+                    return(self.data[index])
+            if(index.stop > self.size or index.stop == 0):
+                raise IndexError("Array slice index out of range")
+            else:
+                return(self.data[index])
+        else:
+            if(index > self.size):
+                raise IndexError("Array index out of range")
+            return(self.data[index])
 
     def __setitem__(self, index, value):
         if(index >= self.size):
@@ -82,7 +96,4 @@ class Array():
 arr1 = Array([1, 2, 3])
 arr2 = Array([2, 4, 6])
 
-print(arr1)
-arr1[2] = 27
-print(arr1[2])
-print(arr1) 
+print(arr1[1:3])
