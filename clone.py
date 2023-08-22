@@ -31,6 +31,15 @@ class Array():
         self.data.append(value)
         self.size += 1
 
+    def sum(self):
+        value = 0
+        for elem in self.data:
+            if not isinstance(elem, (int, float)):
+                raise TypeError("Sum can only be calculated on arrays of types of int or float")
+            value += elem 
+        return(value)
+
+
     def __getitem__(self, index):
         if isinstance(index, slice):
             if isinstance(index.stop, NoneType):
@@ -99,9 +108,8 @@ class Array():
 
 
 if __name__ == "__main__":
-    arr1 = Array([1, 2, 3])
+    arr1 = Array([1, 2, 26])
     arr2 = Array([2, 4, 6])
 
-    arr1.append(-1)
-
     print(arr1.size, arr1)
+    print(arr1.sum())

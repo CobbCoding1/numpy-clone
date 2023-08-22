@@ -47,3 +47,7 @@ Current Functionality:
 #### Append value to array
 
 `arr.append(15)` arr = [1, 2, 5, 2, 2, 15]
+
+#### Return sum of all elements in array
+
+`print(arr.sum())` output: 27
