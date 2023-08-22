@@ -18,10 +18,10 @@ class Array():
             raise TypeError(f"An Array cannot be {operation} a non-Array type!")
 
 
-    def __getItem__(self, index):
+    def __getitem__(self, index):
         return(self.data[index])
 
-    def __setItem__(self, index, value):
+    def __setitem__(self, index, value):
         self.data[index] = value
 
     def __len__(self):
@@ -72,5 +72,7 @@ class Array():
 arr1 = Array([1, 2, 3])
 arr2 = Array([2, 4, 6])
 
-print(arr1 / [1])
+print(arr1)
+arr1[0] = 27
+print(arr1[0])
         
