@@ -93,7 +93,9 @@ class Array():
         else:
             return(self.handle_errors(compared, "divided by"))
 
-arr1 = Array([1, 2, 3])
-arr2 = Array([2, 4, 6])
 
-print(arr1[1:3])
+if __name__ == "__main__":
+    arr1 = Array([1, 2, 3])
+    arr2 = Array([2, 4, 6])
+
+    print(arr1[1:3])
