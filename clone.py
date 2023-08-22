@@ -27,6 +27,10 @@ class Array():
         self.data.extend([fill_value] * diff)
         self.size = new_size
 
+    def append(self, value):
+        self.data.append(value)
+        self.size += 1
+
     def __getitem__(self, index):
         if isinstance(index, slice):
             if isinstance(index.stop, NoneType):
@@ -98,4 +102,6 @@ if __name__ == "__main__":
     arr1 = Array([1, 2, 3])
     arr2 = Array([2, 4, 6])
 
-    print(arr1[1:3])
+    arr1.append(-1)
+
+    print(arr1.size, arr1)
