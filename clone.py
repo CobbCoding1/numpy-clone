@@ -5,6 +5,15 @@ class Array():
     def __init__(self, data, ndim=0):
         self.data = data
         self.size = len(data)
+        if self.size != 0:
+            self.shape = self.calculate_shape(data)
+
+    def calculate_shape(self, data):
+        shape = []
+        while isinstance(data, list):
+            shape.append(len(data))
+            data = data[0]
+        return(tuple(shape))
 
     def compare_type_and_size(self, other):
         if isinstance(other, Array) and len(self) == len(other):
@@ -86,47 +95,75 @@ class Array():
         return str(self.data)
 
     def __add__(self, other):
-        compared = self.compare_type_and_size(other)
-        if compared == True:
-            new_data = [x + y for x, y in zip(self.data, other.data)]
-            return Array(new_data)
+        if len(self.shape) == 1:
+            compared = self.compare_type_and_size(other)
+            if compared == True:
+                new_data = [x + y for x, y in zip(self.data, other.data)]
+                return Array(new_data)
+            else:
+                return(self.handle_errors(compared, "added to"))
         else:
-            return(self.handle_errors(compared, "added to"))
+            return "Not implemented yet"
 
     def __sub__(self, other):
-        compared = self.compare_type_and_size(other)
-        if compared == True:
-            new_data = [x - y for x, y in zip(self.data, other.data)]
-            return Array(new_data)
+        if len(self.shape) == 1:
+            compared = self.compare_type_and_size(other)
+            if compared == True:
+                new_data = [x - y for x, y in zip(self.data, other.data)]
+                return Array(new_data)
+            else:
+                return(self.handle_errors(compared, "subtracted from"))
         else:
-            return(self.handle_errors(compared, "subtracted from"))
+            return "Not implemented yet"
 
     def __mul__(self, other):
-        compared = self.compare_type_and_size(other)
-        if compared == True:
-            new_data = [x * y for x, y in zip(self.data, other.data)]
-            return Array(new_data) 
+        if len(self.shape) == 1:
+            compared = self.compare_type_and_size(other)
+            if compared == True:
+                new_data = [x * y for x, y in zip(self.data, other.data)]
+                return Array(new_data) 
+            else:
+                return(self.handle_errors(compared, "multiplied by"))
         else:
-            return(self.handle_errors(compared, "multiplied by"))
+            return self.matmul(other)
+    
+    def matmul(self, other):
+        if self.shape[1] != other.shape[0]:
+            raise ValueError("Shape Error")
+        r = Array([]) 
+        m = Array([])
+        for i in range(len(self.data)):
+            for j in range(len(other.data[0])):
+                sums = 0
+                for k in range(len(other.data)):
+                    sums = sums + (self.data[i][k] * other.data[k][j])
+                r.append(sums)
+            m.append(r)
+            r = Array([])
+        return m
 
     def __truediv__(self, other):
-        if isinstance(other, (int, float)):
-            new_data = [x / other for x in self.data]
-            return Array(new_data)
-        
-        compared = self.compare_type_and_size(other)
-        if compared == True:
-            new_data = [x / y for x, y in zip(self.data, other.data)]
-            return Array(new_data)
+        if len(self.shape) == 1:
+            if isinstance(other, (int, float)):
+                new_data = [x / other for x in self.data]
+                return Array(new_data)
+            
+            compared = self.compare_type_and_size(other)
+            if compared == True:
+                new_data = [x / y for x, y in zip(self.data, other.data)]
+                return Array(new_data)
+            else:
+                return(self.handle_errors(compared, "divided by"))
         else:
-            return(self.handle_errors(compared, "divided by"))
+            return "Not implemented yet"
 
     # Aliases
     average = mean
 
 if __name__ == "__main__":
-    arr1 = Array([5, 10, 15])
-    arr2 = Array([2, 4, 6])
+    arr1 = Array([[1, 0], [0, 1]])
+    arr2 = Array([1, 2])
+    print(arr2.shape, arr1.shape)
 
-    print(arr1.size, arr1)
-    print(arr1.product())
+    arr3 = arr2 * arr1
+    print(arr3)
